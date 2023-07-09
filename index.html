@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Genshin Test</title>
+    <title>Evil Babysitter</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
@@ -16,6 +16,9 @@
         <div id="unity-progress-bar-empty">
           <div id="unity-progress-bar-full"></div>
         </div>
+        <div id="unity-progress-bar-empty-mobile">
+          <div id="unity-progress-bar-full-mobile"></div>
+        </div>
       </div>
       <div id="unity-warning"> </div>
 
@@ -26,6 +29,7 @@
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
       //var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
@@ -99,9 +103,8 @@
       script.src = loaderUrl;
 
       script.onload = () => {
-
         createUnityInstance(canvas, config, (progress) => {
-                          progressBarFull.style.width = 100 * progress + "%";
+                            progressBarFull.style.width = 100 * progress + "%";
                       }).then((unityInstance) => {
                             myGameInstance = unityInstance;
                             vkBridge.send("VKWebAppInit", {});
@@ -113,8 +116,17 @@
                             .then((data) => { 
                               if (data.keys) 
                               {
+                                  console.log("LOAD");
                                   console.log(data.keys[0].value);
-                                  myGameInstance.SendMessage('Init', 'SetPlayerData', data.keys[0].value);
+                                  if (data.keys[0].value !== null && data.keys[0].value != '')
+                                  {
+                                      myGameInstance.SendMessage('Init', 'SetPlayerData', data.keys[0].value);
+                                  }
+                                  else
+                                  {
+                                    console.log("First load");
+                                    myGameInstance.SendMessage('Init', 'FirstLoadVK');
+                                  }
                               }
                             })
                             .catch((error) => {
