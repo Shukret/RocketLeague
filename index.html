@@ -102,19 +102,7 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
 
-      vkBridge.subscribe(eventHandler); 
       document.addEventListener('visibilitychange', eventHandler2);
-      function eventHandler(e) {
-
-      const { type, data } = e.detail;
-      switch(type) {
-        case 'VKWebAppViewHide':
-          myGameInstance.SendMessage('Init', 'StopMusAndGame');  
-          break;
-        case 'VKWebAppViewRestore': 
-          myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
-          break;
-    }
 
         function eventHandler2() {
         // Проверяем, скрыта ли страница
