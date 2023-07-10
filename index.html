@@ -102,6 +102,8 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
 
+      vkBridge.subscribe(eventHandler); 
+      document.addEventListener('visibilitychange', eventHandler2);
       function eventHandler(e) {
 
       const { type, data } = e.detail;
@@ -125,8 +127,6 @@
       
       script.onload = () => {
         vkBridge.send("VKWebAppInit", {});
-        vkBridge.subscribe(eventHandler); 
-        document.addEventListener('visibilitychange', eventHandler2);
         createUnityInstance(canvas, config, (progress) => {
                             progressBarFull.style.width = 100 * progress + "%";
                       }).then((unityInstance) => {
