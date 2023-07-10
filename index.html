@@ -102,8 +102,31 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
 
+      function eventHandler(e) {
+
+      const { type, data } = e.detail;
+      switch(type) {
+        case 'VKWebAppViewHide':
+          myGameInstance.SendMessage('Init', 'StopMusAndGame');  
+          break;
+        case 'VKWebAppViewRestore': 
+          myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
+          break;
+    }
+
+        function eventHandler2() {
+        // Проверяем, скрыта ли страница
+        if (document.hidden) { 
+          myGameInstance.SendMessage('Init', 'StopMusAndGame');  
+        } else {
+          myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
+        }
+      }
+      
       script.onload = () => {
         vkBridge.send("VKWebAppInit", {});
+        vkBridge.subscribe(eventHandler); 
+        document.addEventListener('visibilitychange', eventHandler2);
         createUnityInstance(canvas, config, (progress) => {
                             progressBarFull.style.width = 100 * progress + "%";
                       }).then((unityInstance) => {
