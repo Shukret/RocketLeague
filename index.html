@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Evil Babysitter</title>
+    <title>Rocket League</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
@@ -103,11 +103,11 @@
       script.src = loaderUrl;
 
       script.onload = () => {
+        vkBridge.send("VKWebAppInit", {});
         createUnityInstance(canvas, config, (progress) => {
                             progressBarFull.style.width = 100 * progress + "%";
                       }).then((unityInstance) => {
                             myGameInstance = unityInstance;
-                            vkBridge.send("VKWebAppInit", {});
                             vkBridge.send('VKWebAppStorageGet', {
                             keys: [
                               //массив названий ключей, значения которых хотим получить
