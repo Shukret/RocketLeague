@@ -97,7 +97,7 @@
 
       loadingBar.style.display = "block";
 
-      function eventHandler(e) {
+    /*function eventHandler(e) {
                   
                     const { type, data } = e.detail;
                     switch(type) {
@@ -108,7 +108,7 @@
                         myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
                         break;
                       }
-                  }
+                  }*/
       
       var myGameInstance = null;
 
@@ -122,13 +122,11 @@
                             progressBarFull.style.width = 100 * progress + "%";
                       }).then((unityInstance) => {
                             myGameInstance = unityInstance;
-                            vkBridge.subscribe(eventHandler); 
+                            //vkBridge.subscribe(eventHandler); 
                             vkBridge.subscribe((e) => {
                             if (e.detail.type === 'VKWebAppViewHide') {
                               myGameInstance.SendMessage('Init', 'StopMusAndGame'); 
                             }
-                          });
-                            vkBridge.subscribe((e) => {
                             if (e.detail.type === 'VKWebAppViewRestore') {
                               myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
                             }
