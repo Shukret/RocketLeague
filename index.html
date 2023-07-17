@@ -122,7 +122,17 @@
                             progressBarFull.style.width = 100 * progress + "%";
                       }).then((unityInstance) => {
                             myGameInstance = unityInstance;
-                             vkBridge.subscribe(eventHandler); 
+                            vkBridge.subscribe(eventHandler); 
+                            vkBridge.subscribe((e) => {
+                            if (e.detail.type === 'VKWebAppViewHide') {
+                              myGameInstance.SendMessage('Init', 'StopMusAndGame'); 
+                            }
+                          });
+                            bridge.subscribe((e) => {
+                            if (e.detail.type === 'VKWebAppViewRestore') {
+                              myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
+                            }
+                          });
                             vkBridge.send('VKWebAppStorageGet', {
                             keys: [
                               //массив названий ключей, значения которых хотим получить
