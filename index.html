@@ -128,7 +128,7 @@
                               myGameInstance.SendMessage('Init', 'StopMusAndGame'); 
                             }
                           });
-                            bridge.subscribe((e) => {
+                            vkBridge.subscribe((e) => {
                             if (e.detail.type === 'VKWebAppViewRestore') {
                               myGameInstance.SendMessage('Init', 'ResumeMusAndGame');  
                             }
